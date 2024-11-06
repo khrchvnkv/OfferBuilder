@@ -1,24 +1,24 @@
-using Common.Infrastructure.Services.InputServices;
+using Common.Infrastructure.UI;
+using Common.UnityLogic.UI.OfferConstructor;
 
 namespace Common.Infrastructure.StateMachine.States
 {
     public class GameLoopState : IState
     {
-        private readonly IInputService _inputService;
+        private readonly IScreenManager _screenManager;
 
-        public GameLoopState(IInputService inputService)
+        public GameLoopState(
+            IScreenManager screenManager)
         {
-            _inputService = inputService;
+            _screenManager = screenManager;
         }
 
         public void Enter()
         {
-            _inputService.EnableInput();
+            _screenManager.ShowWindow(new OfferConstructorScreen.Args());
         }
 
         public void Exit()
-        {
-            _inputService.DisableInput();
-        }
+        { }
     }
 }

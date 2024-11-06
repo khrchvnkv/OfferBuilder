@@ -1,12 +1,10 @@
 using Common.Infrastructure.Factories.Zenject;
 using Common.Infrastructure.Services.AssetsManagement;
 using Common.Infrastructure.Services.Coroutines;
-using Common.Infrastructure.Services.InputServices;
 using Common.Infrastructure.Services.SceneLoading;
 using Common.Infrastructure.Services.StaticData;
 using Common.Infrastructure.StateMachine;
 using Common.Infrastructure.StateMachine.Factory;
-using Common.Infrastructure.StateMachine.States;
 using Common.Infrastructure.UI;
 using NaughtyAttributes;
 using UnityEngine;
@@ -36,7 +34,6 @@ namespace Common.UnityLogic.MonoInstallers
             Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
             Container.Bind<IStaticDataService>().To<StaticDataService>().AsSingle();
             Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
-            Container.Bind<IInputService>().To<StandaloneInputService>().AsSingle();
         }
         
         private void BindGameStateMachine()

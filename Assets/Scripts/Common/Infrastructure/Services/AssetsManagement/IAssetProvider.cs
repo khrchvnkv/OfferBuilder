@@ -5,7 +5,7 @@ namespace Common.Infrastructure.Services.AssetsManagement
 {
     public interface IAssetProvider
     {
-        ItemStaticData[] loadItemsStaticData();
+        ItemStaticData[] LoadItemsStaticData();
         GameObject Load(in string path);
     }
 }

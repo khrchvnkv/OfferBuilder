@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.UnityLogic.UI.LoadingScreen;
+using Zenject;
 
 namespace Common.Infrastructure.UI
 {
-    public sealed class ScreenManager : IScreenManager
+    public sealed class ScreenManager : IScreenManager, IInitializable
     {
         private readonly LoadingCurtain _loadingCurtain;
         private readonly Dictionary<Type, IScreen> _screensMap;
@@ -16,6 +17,14 @@ namespace Common.Infrastructure.UI
         {
             _loadingCurtain = loadingCurtain;
             _screensMap = screens.ToDictionary(key => key.ArgsType, value => value);
+        }
+        
+        public void Initialize()
+        {
+            foreach (var screenKeyValuePair in _screensMap)
+            {
+                screenKeyValuePair.Value.Hide();
+            }
         }
         
         public void ShowLoadingCurtain() => _loadingCurtain.Show();

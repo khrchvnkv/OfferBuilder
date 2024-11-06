@@ -20,7 +20,7 @@ namespace Common.Infrastructure.Services.StaticData
         public void LoadData()
         {
             _itemsStaticData.Clear();
-            var itemsData = _assetProvider.loadItemsStaticData();
+            var itemsData = _assetProvider.LoadItemsStaticData();
             _itemsStaticData = itemsData.ToDictionary(key => key.Name, value => value);
         }
     }

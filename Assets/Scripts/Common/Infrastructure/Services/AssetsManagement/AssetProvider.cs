@@ -7,7 +7,7 @@ namespace Common.Infrastructure.Services.AssetsManagement
     {
         private const string GAME_STATIC_DATA_PATH = "StaticData/GameStaticData";
 
-        public ItemStaticData[] loadItemsStaticData() => LoadAll<ItemStaticData>(GAME_STATIC_DATA_PATH);
+        public ItemStaticData[] LoadItemsStaticData() => LoadAll<ItemStaticData>(GAME_STATIC_DATA_PATH);
 
         public GameObject Load(in string path) => Load<GameObject>(path);
         

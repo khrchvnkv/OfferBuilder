@@ -1,4 +1,9 @@
+using System.Linq;
+using System.Reflection;
+using Common.Infrastructure.UI;
 using Common.UnityLogic.UI.LoadingScreen;
+using Common.UnityLogic.UI.OfferConstructor;
+using NaughtyAttributes;
 using UnityEngine;
 using Zenject;
 
@@ -6,16 +11,34 @@ namespace Common.UnityLogic.MonoInstallers
 {
     public class UserInterfaceInstaller : MonoInstaller
     {
-        [SerializeField] private LoadingCurtain _loadingCurtain;
+        [SerializeField, Required] private LoadingCurtain _loadingCurtain;
+        [SerializeField, Required] private OfferConstructorView _offerConstructorView;
         
         public override void InstallBindings()
         {
             InstallCore();
+            InstallScreens();
+            InstallViews();
         }
 
-        private void InstallCore()
+        private void InstallCore() => Container.Bind<LoadingCurtain>().FromInstance(_loadingCurtain);
+        
+        private void InstallScreens()
         {
-            Container.Bind<LoadingCurtain>().FromInstance(_loadingCurtain);
+            var types = Assembly
+                .GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => typeof(IScreen).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract);
+            
+            foreach (var type in types)
+            {
+                Container.BindInterfacesAndSelfTo(type).AsCached();
+            }
+        }
+        
+        private void InstallViews()
+        {
+            Container.Bind<OfferConstructorView>().FromInstance(_offerConstructorView);
         }
     }
 }

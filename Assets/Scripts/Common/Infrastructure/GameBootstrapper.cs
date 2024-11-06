@@ -15,6 +15,7 @@ namespace Common.Infrastructure
             _gameStateMachine = gameStateMachine;
             Init();
         }
+        
         private void Init() => _gameStateMachine.Enter<BootstrapState>();
     }
 }
