@@ -2,6 +2,7 @@ using System.Linq;
 using System.Reflection;
 using Common.Infrastructure.UI;
 using Common.UnityLogic.UI.LoadingScreen;
+using Common.UnityLogic.UI.Offer;
 using Common.UnityLogic.UI.OfferConstructor;
 using NaughtyAttributes;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace Common.UnityLogic.MonoInstallers
     {
         [SerializeField, Required] private LoadingCurtain _loadingCurtain;
         [SerializeField, Required] private OfferConstructorView _offerConstructorView;
+        [SerializeField, Required] private OfferView _offerView;
         
         public override void InstallBindings()
         {
@@ -21,8 +23,11 @@ namespace Common.UnityLogic.MonoInstallers
             InstallViews();
         }
 
-        private void InstallCore() => Container.Bind<LoadingCurtain>().FromInstance(_loadingCurtain);
-        
+        private void InstallCore()
+        {
+            Container.Bind<LoadingCurtain>().FromInstance(_loadingCurtain);
+        }
+
         private void InstallScreens()
         {
             var types = Assembly
@@ -38,7 +43,8 @@ namespace Common.UnityLogic.MonoInstallers
         
         private void InstallViews()
         {
-            Container.Bind<OfferConstructorView>().FromInstance(_offerConstructorView);
+            Container.BindInterfacesAndSelfTo<OfferConstructorView>().FromInstance(_offerConstructorView);
+            Container.BindInterfacesAndSelfTo<OfferView>().FromInstance(_offerView);
         }
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Common.Infrastructure.Services.AssetsManagement;
 using Common.StaticData;
 
@@ -9,7 +7,7 @@ namespace Common.Infrastructure.Services.StaticData
     {
         private readonly IAssetProvider _assetProvider;
         
-        private Dictionary<string, ItemStaticData> _itemsStaticData = new();
+        public ItemStaticData[] ItemsStaticData { get; private set; }
         
 
         public StaticDataService(IAssetProvider assetProvider)
@@ -17,11 +15,6 @@ namespace Common.Infrastructure.Services.StaticData
             _assetProvider = assetProvider;
         }
         
-        public void LoadData()
-        {
-            _itemsStaticData.Clear();
-            var itemsData = _assetProvider.LoadItemsStaticData();
-            _itemsStaticData = itemsData.ToDictionary(key => key.Name, value => value);
-        }
+        public void LoadData() => ItemsStaticData = _assetProvider.LoadItemsStaticData();
     }
 }

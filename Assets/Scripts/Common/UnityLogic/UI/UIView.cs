@@ -1,23 +1,28 @@
 using UnityEngine;
+using Zenject;
 
 namespace Common.UnityLogic.UI
 {
-    public class UIView : MonoBehaviour
+    public class UIView : MonoBehaviour, IInitializable
     {
+        public void Initialize() => OnInitialize();
+
         public void Show()
         {
-            PrepareForShowing();
+            Subscribe();
             gameObject.SetActive(true);
         }
-
+        
         public void Hide()
         {
-            PrepareForHiding();
+            Unsubscribe();
             gameObject.SetActive(false);
+            Cleanup();
         }
-
-        protected virtual void PrepareForShowing() { }
         
-        protected virtual void PrepareForHiding() { }
+        protected virtual void OnInitialize() { }
+        protected virtual void Subscribe() { }
+        protected virtual void Unsubscribe() { }
+        protected virtual void Cleanup() { }
     }
 }

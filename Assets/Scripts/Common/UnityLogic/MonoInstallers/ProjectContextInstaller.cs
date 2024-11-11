@@ -34,6 +34,7 @@ namespace Common.UnityLogic.MonoInstallers
             Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
             Container.Bind<IStaticDataService>().To<StaticDataService>().AsSingle();
             Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
+            Container.Bind<IScreenManager>().To<ScreenManager>().AsSingle();
         }
         
         private void BindGameStateMachine()
@@ -45,7 +46,6 @@ namespace Common.UnityLogic.MonoInstallers
         {
             Container.Bind<IGameStatesFactory>().To<GameStatesFactory>().AsSingle();
             Container.Bind<IZenjectFactory>().To<ZenjectFactory>().AsSingle();
-            Container.Bind<IScreenManager>().To<ScreenManager>().AsSingle();
         }
     }
 }

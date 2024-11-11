@@ -5,13 +5,11 @@ namespace Common.Infrastructure.Services.AssetsManagement
 {
     public sealed class AssetProvider : IAssetProvider
     {
-        private const string GAME_STATIC_DATA_PATH = "StaticData/GameStaticData";
+        private const string ITEMS_STATIC_DATA_PATH = "StaticData";
 
-        public ItemStaticData[] LoadItemsStaticData() => LoadAll<ItemStaticData>(GAME_STATIC_DATA_PATH);
-
-        public GameObject Load(in string path) => Load<GameObject>(path);
+        public ItemStaticData[] LoadItemsStaticData() => LoadAll<ItemStaticData>(ITEMS_STATIC_DATA_PATH);
         
-        private T Load<T>(in string path) where T : Object => Resources.Load<T>(path);
+        public T Load<T>(in string path) where T : Object => Resources.Load<T>(path);
         
         private T[] LoadAll<T>(in string path) where T : Object => Resources.LoadAll<T>(path);
     }

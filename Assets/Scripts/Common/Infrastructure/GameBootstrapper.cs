@@ -10,12 +10,9 @@ namespace Common.Infrastructure
         private IGameStateMachine _gameStateMachine;
         
         [Inject]
-        public void Construct(IGameStateMachine gameStateMachine)
-        {
+        private void Construct(IGameStateMachine gameStateMachine) => 
             _gameStateMachine = gameStateMachine;
-            Init();
-        }
-        
-        private void Init() => _gameStateMachine.Enter<BootstrapState>();
+
+        public void RunGame() => _gameStateMachine.Enter<BootstrapState>();
     }
 }

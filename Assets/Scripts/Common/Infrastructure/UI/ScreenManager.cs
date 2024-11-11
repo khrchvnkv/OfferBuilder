@@ -1,36 +1,35 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Common.UnityLogic.UI.LoadingScreen;
 using Zenject;
 
 namespace Common.Infrastructure.UI
 {
-    public sealed class ScreenManager : IScreenManager, IInitializable
+    public sealed class ScreenManager : IScreenManager
     {
         private readonly LoadingCurtain _loadingCurtain;
         private readonly Dictionary<Type, IScreen> _screensMap;
 
         public ScreenManager(
-            LoadingCurtain loadingCurtain,
-            IScreen[] screens)
+            LoadingCurtain loadingCurtain)
         {
             _loadingCurtain = loadingCurtain;
-            _screensMap = screens.ToDictionary(key => key.ArgsType, value => value);
+            _screensMap = new Dictionary<Type, IScreen>();
         }
         
-        public void Initialize()
+        public void Resolve(in DiContainer container)
         {
-            foreach (var screenKeyValuePair in _screensMap)
+            var screens = container.ResolveAll<IScreen>();
+            foreach (var screen in screens)
             {
-                screenKeyValuePair.Value.Hide();
+                Register(screen);
             }
         }
-        
+
         public void ShowLoadingCurtain() => _loadingCurtain.Show();
-        
+
         public void HideLoadingCurtain() => _loadingCurtain.Hide();
-        
+
         public void ShowWindow<TScreenArgs>(TScreenArgs data) where TScreenArgs : IScreenArgs
         {
             var argsType = typeof(TScreenArgs);
@@ -42,8 +41,8 @@ namespace Common.Infrastructure.UI
             
             ThrowNullScreenException(argsType);
         }
-        
-        public void Hide<TScreenArgs>(TScreenArgs data) where TScreenArgs : IScreenArgs
+
+        public void Hide<TScreenArgs>() where TScreenArgs : IScreenArgs
         {
             var argsType = typeof(TScreenArgs);
             if (_screensMap.TryGetValue(argsType, out var screen))
@@ -53,6 +52,12 @@ namespace Common.Infrastructure.UI
             }
             
             ThrowNullScreenException(argsType);
+        }
+
+        private void Register(in IScreen screen)
+        {
+            _screensMap.Add(screen.ArgsType, screen);
+            screen.Hide();
         }
 
         private void ThrowNullScreenException(in Type screenType) => 
