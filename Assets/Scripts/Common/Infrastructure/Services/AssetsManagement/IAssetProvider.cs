@@ -6,6 +6,6 @@ namespace Common.Infrastructure.Services.AssetsManagement
     public interface IAssetProvider
     {
         ItemStaticData[] LoadItemsStaticData();
-        T Load<T>(in string path) where T : Object => Resources.Load<T>(path);
+        T Load<T>(in string path) where T : Object;
     }
 }

@@ -25,7 +25,7 @@ namespace Common.UnityLogic.UI.OfferConstructor
         [SerializeField] private Slider _discountSlider;
         [SerializeField] private TMP_InputField _iconNameInputField;
 
-        private readonly List<ItemBuilderSlot> _slots = new();
+        private readonly List<ItemBuilderSlot> _slots = new List<ItemBuilderSlot>();
 
         private Pool<ItemBuilderSlot> _pool;
 

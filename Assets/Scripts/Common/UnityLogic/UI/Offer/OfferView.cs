@@ -22,7 +22,7 @@ namespace Common.UnityLogic.UI.Offer
         [SerializeField] private TMP_Text _totalPriceText;
         [SerializeField] private Image _offerImage;
 
-        private readonly List<ItemSlot> _slots = new();
+        private readonly List<ItemSlot> _slots = new List<ItemSlot>();
         private Pool<ItemSlot> _pool;
 
         public event Action OnBackButtonClicked;

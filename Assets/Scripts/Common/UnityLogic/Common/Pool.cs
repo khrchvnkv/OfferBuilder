@@ -18,10 +18,7 @@ namespace Common.UnityLogic.Common
 
         public T Rent()
         {
-            if (!_queue.TryDequeue(out var instance))
-            {
-                instance = Instantiate();
-            }
+            var instance = _queue.Count == 0 ? Instantiate() : _queue.Dequeue();
 
             instance.gameObject.SetActive(true);
             return instance;
